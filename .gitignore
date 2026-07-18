@@ -1,0 +1,65 @@
+# =========================
+# Dependencies
+# =========================
+**/node_modules/
+
+# =========================
+# Build Files
+# =========================
+**/dist/
+**/build/
+**/.vite/
+
+# =========================
+# Environment Variables
+# =========================
+**/.env
+**/.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Cache
+# =========================
+.cache/
+.eslintcache
+
+# =========================
+# Runtime
+# =========================
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# Uploads (keep folder)
+# =========================
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# =========================
+# Development Files
+# =========================
+docs/
+validate-project.mjs

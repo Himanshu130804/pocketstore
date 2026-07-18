@@ -1,0 +1,14 @@
+const r=require("express").Router();
+const c=require("../controllers/order.controller");
+const auth=require("../middleware/auth");
+const role=require("../middleware/role");
+r.post("/quote",auth,role("customer"),c.quote);
+r.post("/",auth,role("customer"),c.place);
+r.get("/mine",auth,role("customer"),c.mine);
+r.get("/mine/:id",auth,role("customer"),c.mineOne);
+r.patch("/mine/:id/cancel",auth,role("customer"),c.cancelMine);
+r.post("/pos",auth,role("shop_owner"),c.createPos);
+r.get("/shop/:shopId",auth,role("shop_owner"),c.shopOrders);
+r.patch("/:id/status",auth,role("shop_owner"),c.updateStatus);
+r.post("/:id/complete",auth,role("shop_owner"),c.completeSale);
+module.exports=r;

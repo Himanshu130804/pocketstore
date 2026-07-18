@@ -1,0 +1,10 @@
+const r=require('express').Router();const c=require('../controllers/customer.controller');const auth=require('../middleware/auth');const role=require('../middleware/role');
+r.use(auth,role('customer'));
+r.get('/dashboard',c.dashboard);r.patch('/profile',c.updateProfile);
+r.get('/addresses',c.addresses);r.post('/addresses',c.addAddress);r.patch('/addresses/:id',c.updateAddress);r.delete('/addresses/:id',c.deleteAddress);
+r.get('/wishlist',c.wishlist);r.post('/wishlist/toggle',c.toggleWishlist);
+r.get('/notifications',c.notifications);r.patch('/notifications/:id/read',c.readNotification);
+r.get('/reviews',c.reviews);r.post('/reviews',c.addReview);
+r.get('/support',c.tickets);r.post('/support',c.addTicket);r.get('/returns',c.returnRequests);r.post('/returns',c.createReturnRequest);
+r.get('/complaints',c.complaints);r.post('/complaints',c.createComplaint);
+module.exports=r;

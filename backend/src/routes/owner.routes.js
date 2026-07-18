@@ -1,0 +1,1 @@
+const r=require("express").Router();const c=require("../controllers/owner.controller");const auth=require("../middleware/auth");const role=require("../middleware/role");r.use(auth,role("shop_owner"));r.get("/:shopId/summary",c.summary);r.get("/:shopId/customers",c.customers);r.get("/:shopId/reports",c.reports);module.exports=r;

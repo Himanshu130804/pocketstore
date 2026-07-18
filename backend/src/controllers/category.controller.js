@@ -1,0 +1,3 @@
+const Category=require('../models/Category');const normalize=require('../utils/normalizeLabel');
+exports.list=async(req,res)=>res.json({categories:await Category.find({scope:req.query.scope||'shop'}).sort({name:1})});
+exports.create=async(req,res)=>{const name=normalize(req.body.name);if(!name)return res.status(400).json({message:'Category required'});const scope=req.body.scope||'shop';let category=await Category.findOne({name:new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}$`,'i'),scope});if(!category)category=await Category.create({name,scope,createdBy:req.user._id});res.status(201).json({category});};

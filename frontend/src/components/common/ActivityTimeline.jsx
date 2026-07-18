@@ -1,0 +1,5 @@
+import React from "react";
+import {ShoppingBag,Package,UserPlus,ReceiptText,Truck,AlertTriangle,CheckCircle2,Clock3} from "lucide-react";
+import "./ActivityTimeline.css";
+const icons={order:ShoppingBag,stock:Package,employee:UserPlus,invoice:ReceiptText,delivery:Truck,warning:AlertTriangle,success:CheckCircle2};
+export default function ActivityTimeline({title="Recent activity",items=[],empty="No recent activity yet."}){return <section className="activity-timeline panel"><div className="activity-timeline-head"><div><span className="eyebrow">LIVE WORKSPACE</span><h2>{title}</h2></div><Clock3 size={20}/></div>{items.length?<div className="timeline-list">{items.map((item,index)=>{const Icon=icons[item.type]||CheckCircle2;return <article key={item.id||index}><span className={`timeline-icon ${item.type||"success"}`}><Icon size={17}/></span><div><b>{item.title}</b><p>{item.description}</p></div><time>{item.time||"Now"}</time></article>})}</div>:<div className="timeline-empty"><Clock3/><p>{empty}</p></div>}</section>}

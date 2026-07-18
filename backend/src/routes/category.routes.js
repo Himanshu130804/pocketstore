@@ -1,0 +1,1 @@
+const r=require('express').Router();const c=require('../controllers/category.controller');const auth=require('../middleware/auth');const role=require('../middleware/role');r.get('/',c.list);r.post('/',auth,role('shop_owner'),c.create);module.exports=r;

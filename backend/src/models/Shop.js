@@ -1,0 +1,35 @@
+const mongoose = require("mongoose");
+const schema = new mongoose.Schema({
+  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  name: { type: String, required: true, trim: true },
+  slug: { type: String, required: true, unique: true, lowercase: true },
+  category: { type: String, required: true },
+  description: String,
+  logoUrl: { type: String, default: "" },
+  coverUrl: { type: String, default: "" },
+  galleryUrls: [{ type: String }],
+  tags: [{ type: String }],
+  phone: String,
+  email: String,
+  address: { line1: String, area: String, city: String, state: String, pincode: String },
+  location: { type: { type: String, enum: ["Point"], default: "Point" }, coordinates: { type: [Number], default: [0,0] } },
+  fulfilmentModes: [{ type: String, enum: ["walk_in", "pickup", "delivery", "reserve", "express_pickup", "preorder"] }],
+  deliveryRadiusKm: { type: Number, default: 0 },
+  minimumOrderPaise: { type: Number, default: 0 },
+  gstPercent: { type: Number, default: 0, min: 0, max: 28 },
+  packagingFeePaise: { type: Number, default: 0, min: 0 },
+  handlingFeePaise: { type: Number, default: 0, min: 0 },
+  freeDeliveryAbovePaise: { type: Number, default: 0, min: 0 },
+  status: { type: String, enum: ["draft", "pending", "approved", "rejected", "suspended", "banned", "inactive"], default: "pending" },
+  verificationStatus: { type: String, enum: ["unsubmitted", "pending", "verified", "rejected"], default: "unsubmitted" },
+  rejectionReason: String,
+  retentionDays: { type: Number, default: 365 },
+  isOnlineOrderingEnabled: { type: Boolean, default: true },
+  isLive: { type: Boolean, default: false, index: true },
+  businessHours: [{ day: Number, open: String, close: String, closed: Boolean }],
+  socialLinks: { website: String, instagram: String, facebook: String },
+  returnPolicy: { type: String, default: "" },
+  pickupInstructions: { type: String, default: "" }
+}, { timestamps: true });
+schema.index({ location: "2dsphere" });
+module.exports = mongoose.model("Shop", schema);

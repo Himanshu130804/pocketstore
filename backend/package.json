@@ -1,0 +1,29 @@
+{
+  "name": "pocketstore-backend",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seeds/seed.js",
+    "check": "node ../validate-project.mjs",
+    "repair:catalogue": "node src/scripts/repairCatalogue.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

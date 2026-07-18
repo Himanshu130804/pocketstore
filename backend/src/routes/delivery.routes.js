@@ -1,0 +1,3 @@
+const r=require('express').Router();const c=require('../controllers/delivery.controller');const auth=require('../middleware/auth');r.use(auth);
+r.get('/profile',c.profile);r.post('/enable',c.enable);r.patch('/availability',c.availability);r.patch('/location',c.updateLocation);r.get('/available',c.available);r.post('/orders/:orderId/accept',c.accept);r.get('/orders/mine',c.mine);r.get('/orders/:orderId/pickup-code',c.pickupCode);r.patch('/orders/:orderId/on-way',c.markOnWay);r.post('/orders/:orderId/complete',c.complete);r.get('/orders/:orderId/customer-code',c.customerCode);r.post('/owner/orders/:orderId/broadcast',c.broadcast);r.post('/owner/orders/:orderId/verify-handover',c.verifyHandover);
+module.exports=r;

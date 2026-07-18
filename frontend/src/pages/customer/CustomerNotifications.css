@@ -1,0 +1,1 @@
+.notification-list article{display:flex;justify-content:space-between;gap:15px;padding:16px;border-bottom:1px solid #eef0f4;cursor:pointer}.notification-list article.unread{background:#f5f7ff}.notification-list article span{align-self:flex-start;background:#4f46e5;color:#fff;padding:4px 8px;border-radius:999px;font-size:11px}.notification-list p{margin:5px 0;color:#667085}

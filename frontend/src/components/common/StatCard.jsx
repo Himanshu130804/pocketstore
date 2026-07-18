@@ -1,0 +1,1 @@
+import React from "react";import "./StatCard.css";export default function StatCard({icon:Icon,label,value,note}){return <article className="stat-card"><span><Icon size={22}/></span><div><small>{label}</small><strong>{value}</strong><p>{note}</p></div></article>}

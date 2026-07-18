@@ -1,0 +1,18 @@
+import React,{useCallback,useEffect,useState} from 'react';
+import {CheckCircle2,MessageSquareText,Star} from 'lucide-react';
+import api from '../../api/client';
+import './CustomerReviews.css';
+
+export default function CustomerReviews(){
+ const[list,setList]=useState([]),[eligible,setEligible]=useState([]),[loading,setLoading]=useState(true),[error,setError]=useState('');
+ const[orderId,setOrderId]=useState(''),[rating,setRating]=useState(5),[comment,setComment]=useState(''),[saving,setSaving]=useState(false),[success,setSuccess]=useState('');
+ const load=useCallback(async()=>{setLoading(true);setError('');try{const{data}=await api.get('/customer/reviews');setList(Array.isArray(data?.reviews)?data.reviews:[]);setEligible(Array.isArray(data?.eligibleOrders)?data.eligibleOrders:[]);setOrderId(current=>current||data?.eligibleOrders?.[0]?._id||'')}catch(e){setError(e.response?.data?.message||'Unable to load reviews')}finally{setLoading(false)}},[]);
+ useEffect(()=>{load()},[load]);
+ const submit=async()=>{if(!orderId)return setError('Select a completed order');try{setSaving(true);setError('');setSuccess('');await api.post('/customer/reviews',{orderId,rating,comment});setComment('');setSuccess('Review submitted successfully');await load()}catch(e){setError(e.response?.data?.message||'Unable to submit review')}finally{setSaving(false)}};
+ return <>
+  <div className="portal-heading"><div><span>Your feedback</span><h1>Reviews</h1><p>Rate completed orders and manage feedback shared with local shops.</p></div></div>
+  {error&&<div className="inline-alert error">{error}<button onClick={load}>Retry</button></div>}{success&&<div className="inline-alert success-text"><CheckCircle2/> {success}</div>}
+  {!loading&&eligible.length>0&&<section className="portal-card review-compose-card"><div><h2><MessageSquareText/> Write a review</h2><p>Select a delivered order, rate the experience and share useful feedback.</p></div><label>Completed order<select value={orderId} onChange={e=>setOrderId(e.target.value)}>{eligible.map(o=><option key={o._id} value={o._id}>{o.shopId?.name||'Local shop'} · {o.orderNumber}</option>)}</select></label><div className="rating-picker" aria-label="Rating">{[1,2,3,4,5].map(n=><button type="button" key={n} onClick={()=>setRating(n)} aria-label={`${n} stars`}><Star fill={n<=rating?'currentColor':'none'}/></button>)}</div><textarea rows="4" maxLength="1000" placeholder="What was good? What could be improved?" value={comment} onChange={e=>setComment(e.target.value)}/><div className="review-submit-row"><small>{comment.length}/1000</small><button className="primary-button" disabled={saving} onClick={submit}>{saving?'Submitting…':'Submit review'}</button></div></section>}
+  <section className="portal-card top-gap">{loading?<div className="skeleton-list"><div/><div/></div>:list.map(r=><article className="review-row" key={r._id}><div className="review-header"><div><h3>{r.shopId?.name||'Local shop'}</h3><small>{new Date(r.createdAt).toLocaleDateString()}</small></div><div className="stars" aria-label={`${r.rating} out of 5 stars`}>{[1,2,3,4,5].map(n=><Star key={n} size={18} fill={n<=r.rating?'currentColor':'none'}/>)}</div></div><p>{r.comment||'No written comment.'}</p><span className={`status ${r.status}`}>{r.status}</span></article>)}{!loading&&!list.length&&!eligible.length&&<div className="empty-state"><Star/><h3>No reviews yet</h3><p>Complete an order first. A review form will appear here after delivery or pickup completion.</p></div>}{!loading&&!list.length&&eligible.length>0&&<div className="review-help-note">Your completed orders are ready to review above.</div>}</section>
+ </>;
+}

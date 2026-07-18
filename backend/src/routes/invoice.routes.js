@@ -1,0 +1,1 @@
+const r=require("express").Router(); const c=require("../controllers/invoice.controller"); const auth=require("../middleware/auth"); const role=require("../middleware/role"); r.get("/public/:token",c.publicView); r.get("/mine",auth,role("customer"),c.mine); r.get("/shop/:shopId/customer-history",auth,role("shop_owner"),c.shopCustomerHistory); module.exports=r;
